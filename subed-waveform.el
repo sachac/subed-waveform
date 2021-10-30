@@ -28,9 +28,7 @@
 ;; yet available as a package but can be downloaded from
 ;; https://github.com/rndusr/subed .
 ;;
-;; If you use use-package and straight,
-
-;; `subed-waveform-minor-mode' lets you see the waveform waveform for
+;; `subed-waveform-minor-mode' lets you see the waveform for
 ;; the current subtitle in order to make it easier to adjust times.
 ;; It requires FFMPEG, which should be at the location specified by
 ;; `subed-ffmpeg-executable'.
