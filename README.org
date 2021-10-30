@@ -1,0 +1,34 @@
+* subed-waveform
+
+This package uses the [[https://www.ffmpeg.org/][FFMPEG command-line tool]] to display waveforms
+next to the current subtitle in a =subed= buffer.  This can be a handy
+way to fine-tune the start and stop times of a subtitle.
+
+subed.el is not yet available as a package, but can be downloaded from
+https://github.com/rndusr/subed . It supports SRT and WebVTT files.
+
+If images are not displayed, you may want to make sure =max-image-size=
+is set to a value that allows short, wide images.  The following code:
+
+#+begin_src emacs-lisp :eval no
+(add-hook 'subed-mode (lambda () (setq-local max-image-size nil)))
+#+end_src
+
+may do the trick.
+
+#+CAPTION: Waveform displayed next to subtitle
+[[file:waveform.png]]
+
+| mouse-1        | Left-click        | set the subtitle start time                                                       |
+| mouse-2        | Middle-click      | jump to that position in MPV and play a brief sample                              |
+| mouse-3        | Right-click       | set the subtitle stop time                                                        |
+| S-mouse-1      | Shift-left-click  | extend the subtitle start time by ~subed-milliseconds-adjust~                     |
+| S-drag-mouse-1 | Drag-left-click   | extend the subtitle start time based on distance dragged                          |
+| C-mouse-1      | Ctrl-left-click   | set the subtitle start time and copy it to the stop time of the previous subtitle |
+| S-mouse-3      | Shift-right-click | extend the subtitle stop time by ~subed-milliseconds-adjust~                      |
+| S-drag-mouse-3 | Drag-right-click  | extend the subtitle stop time based on distance dragged                           |
+| C-mouse-3      | Ctrl-right-click  | set the subtitle stop time and copy it to the start time of the next subtitle     |
+
+The copied start or end times respect ~subed-subtitle-spacing~.
+
+If the images are not displayed properly, check that ~max-image-size~ is set to nil.
