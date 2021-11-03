@@ -31,7 +31,7 @@
 ;; `subed-waveform-minor-mode' lets you see the waveform for
 ;; the current subtitle in order to make it easier to adjust times.
 ;; It requires FFMPEG, which should be at the location specified by
-;; `subed-ffmpeg-executable'.
+;; `subed-waveform-ffmpeg-executable'.
 ;;
 ;; If images are not displayed, you may want to make sure `max-image-size'
 ;; is set to a value that allows short, wide images.  The following code:
@@ -309,7 +309,7 @@ ffmpeg asynchronously, then call the function with the image data."
 	          (quit-process subed-waveform--ffmpeg-process))
 	        (setq subed-waveform--ffmpeg-process
 		            (apply 'start-process "ffmpeg" buffer
-                       subed-ffmpeg-executable args))
+                       subed-waveform-ffmpeg-executable args))
           (set-process-sentinel
            subed-waveform--ffmpeg-process
            (lambda (process event)
@@ -317,7 +317,7 @@ ffmpeg asynchronously, then call the function with the image data."
                (with-current-buffer (process-buffer process)
                  (funcall callback (encode-coding-string (buffer-string) 'binary)))))))
       (with-temp-buffer
-        (apply 'call-process subed-ffmpeg-executable nil t nil args)
+        (apply 'call-process subed-waveform-ffmpeg-executable nil t nil args)
         (encode-coding-string (buffer-string) 'binary)))))
 
 (defun subed-waveform-fancy-filter (width height)
