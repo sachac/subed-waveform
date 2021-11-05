@@ -118,8 +118,9 @@ Resets MPV position when done.")
   "Evaluate BODY in the context of the buffer and position stored in EVENT."
   (declare (debug t))
   `(let ((marker (plist-get (cdr (elt (cadr ,event) 7)) :marker)))
-     (with-current-buffer (marker-buffer marker)
-       ,@body)))
+     (when (buffer-live-p (marker-buffer marker))
+       (with-current-buffer (marker-buffer marker)
+         ,@body))))
 
 ;;; Adjusting timestamps
 
@@ -331,15 +332,16 @@ WIDTH and HEIGHT are given in pixels."
 
 (defun subed-waveform--update-overlay-with-image-data (image-data &rest props)
   "Update the subed waveform."
-  (with-current-buffer (marker-buffer (plist-get props :marker))
-    (overlay-put subed-waveform--overlay
-                 'before-string
-                 (propertize
-                  "x"
-                  'display
-                  (apply 'create-image image-data nil t
-                         props)
-                  'keymap subed-waveform-map))))
+  (when (buffer-live-p (marker-buffer (plist-get props :marker)))
+    (with-current-buffer (marker-buffer (plist-get props :marker))
+      (overlay-put subed-waveform--overlay
+                   'before-string
+                   (propertize
+                    "x"
+                    'display
+                    (apply 'create-image image-data nil t
+                           props)
+                    'keymap subed-waveform-map)))))
 
 (defun subed-waveform-show (&optional force)
   "Display the waveform for the current subtitle.
