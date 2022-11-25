@@ -277,7 +277,7 @@ If DURATION is unspecified, use `subed-waveform-sample-msecs.'"
 INPUT-FILE is the input file.  WIDTH and HEIGHT are the
 dimensions in pixels.  If specified, START-MS (inclusive) and
 STOP-MS (exclusive) are the times in milliseconds.  The result
-can be used in `create-image.'  If CALLBACK is a fucntion, call
+can be used in `create-image.'  If CALLBACK is a function, call
 ffmpeg asynchronously, then call the function with the image data."
   (let* ((start-s (if start-ms (/ start-ms 1000.0)))
          (end-s (if stop-ms (/ stop-ms 1000.0)))
@@ -349,7 +349,7 @@ By default, this command updates the waveform only if the start
 or stop times have changed.  With \\[universal-argument] prefix,
 always update the waveform."
   (interactive "P")
-  (when subed-mpv-video-file
+  (when subed-mpv-media-file
     (save-excursion
       (unless (overlayp subed-waveform--overlay)
         (setq subed-waveform--overlay
@@ -377,7 +377,7 @@ always update the waveform."
                       (not (= start-ms (plist-get current-image-props :start-ms)))
                       (not (= stop-ms (plist-get current-image-props :stop-ms)))))
             (subed-waveform-image-data
-             subed-mpv-video-file
+             subed-mpv-media-file
              width
              subed-waveform-height
 	           start-ms
